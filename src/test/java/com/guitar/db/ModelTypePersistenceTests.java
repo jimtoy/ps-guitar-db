@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class ModelTypePersistenceTests {
     @Autowired
     private ModelTypeJpaRepository modelTypeRepository;
+
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -46,5 +48,10 @@ public class ModelTypePersistenceTests {
         assertEquals("Dreadnought Acoustic", mt.getName());
     }
 
+    @Test
+    public void testIsNull() throws Exception {
+        List<ModelType> modelTypes = modelTypeRepository.findByNameIsNull();
+        assertEquals(8, modelTypes.get(0).getId().intValue());
+    }
 
 }

@@ -18,42 +18,11 @@ public class ManufacturerRepository {
     private ManufacturerJpaRepository manufacturerJpaRepository;
 
     /**
-     * Create
-     */
-    public Manufacturer create(Manufacturer man) {
-        return manufacturerJpaRepository.saveAndFlush(man);
-    }
-
-    /**
-     * Update
-     */
-    public Manufacturer update(Manufacturer man) {
-        return manufacturerJpaRepository.saveAndFlush(man);
-    }
-
-    /**
-     * Delete
-     */
-    public void delete(Manufacturer man) {
-        manufacturerJpaRepository.delete(man);
-    }
-
-    /**
-     * Find
-     */
-    public Manufacturer find(Long id) {
-        return manufacturerJpaRepository.findOne(id);
-    }
-
-    /**
      * Custom finder
      */
     public List<Manufacturer> getManufacturersFoundedBeforeDate(Date date) {
-        @SuppressWarnings("unchecked")
-        List<Manufacturer> mans = entityManager
-                .createQuery("select m from Manufacturer m where m.foundedDate < :date")
-                .setParameter("date", date).getResultList();
-        return mans;
+
+        return manufacturerJpaRepository.findByFoundedDateBefore(date);
     }
 
     /**
