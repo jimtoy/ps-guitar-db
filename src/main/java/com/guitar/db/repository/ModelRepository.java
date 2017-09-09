@@ -11,8 +11,6 @@ import java.util.List;
 
 @Repository
 public class ModelRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Autowired
     private ModelJpaRepository modelJpaRepository;

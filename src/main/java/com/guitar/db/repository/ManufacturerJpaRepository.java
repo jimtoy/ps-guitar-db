@@ -2,6 +2,8 @@ package com.guitar.db.repository;
 
 import com.guitar.db.model.Manufacturer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -16,4 +18,9 @@ public interface ManufacturerJpaRepository extends JpaRepository<Manufacturer, L
     List<Manufacturer> findByActiveTrue();
 
     List<Manufacturer> findByActiveFalse();
+
+    List<Manufacturer> getAllThatSellAcoustics(String name);
+
+    @Query("select m from Manufacturer m where m.name like %:name%")
+    Manufacturer getManufacturerByName(@Param("name") String name);
 }

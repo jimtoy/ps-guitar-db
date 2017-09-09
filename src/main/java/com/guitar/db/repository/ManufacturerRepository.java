@@ -4,15 +4,12 @@ import com.guitar.db.model.Manufacturer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 
 @Repository
 public class ManufacturerRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
+
 
     @Autowired
     private ManufacturerJpaRepository manufacturerJpaRepository;
@@ -29,20 +26,14 @@ public class ManufacturerRepository {
      * Custom finder
      */
     public Manufacturer getManufacturerByName(String name) {
-        Manufacturer man = (Manufacturer) entityManager
-                .createQuery("select m from Manufacturer m where m.name like :name")
-                .setParameter("name", name + "%").getSingleResult();
-        return man;
+        return manufacturerJpaRepository.getManufacturerByName(name);
     }
 
     /**
      * Native Query finder
      */
     public List<Manufacturer> getManufacturersThatSellModelsOfType(String modelType) {
-        @SuppressWarnings("unchecked")
-        List<Manufacturer> mans = entityManager
-                .createNamedQuery("Manufacturer.getAllThatSellAcoustics")
-                .setParameter(1, modelType).getResultList();
-        return mans;
+        return manufacturerJpaRepository.getAllThatSellAcoustics(modelType);
+
     }
 }
